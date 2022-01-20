@@ -6,11 +6,11 @@ import numpy as np
 from datetime import datetime, timezone
 import FillerScripts
 # defects4j query -H -p Jsoup -q "bug.id,revision.id.buggy,revision.id.fixed,report.id,report.url,revision.date.buggy,revision.date.fixed" -o aaaaaaaaaaaaa.csv
-finalcsvpath='/home/gerardo/Scrivania/revisions/JxPathRevisions.csv'
-shpath='/home/gerardo/Scrivania/csvFillerScripts/'
-repopath='/home/gerardo/VersioniJxPath/JxPath'
-project_url='https://github.com/apache/commons-jxpath'
-project_id='JxPath'
+finalcsvpath='/home/gerardo/Scrivania/revisions/Mockitoevisions.csv'
+shpath='/home/gerardo/Scrivania/csvFillerScripts/AllVersionsScripts/'
+repopath='/home/gerardo/VersioniMockito/Mockito'
+project_url='https://github.com/mockito/mockito'
+project_id='Mockito'
 
 
 FillerScripts.cloneProject(finalcsvpath,shpath,repopath,project_url,project_id)

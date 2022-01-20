@@ -7,7 +7,7 @@ from datetime import datetime, timezone
 import FillerScripts
 # defects4j query -H -p Jsoup -q "bug.id,revision.id.buggy,revision.id.fixed,report.id,report.url,revision.date.buggy,revision.date.fixed" -o aaaaaaaaaaaaa.csv
 finalcsvpath='/home/gerardo/Scrivania/revisions/MathRevisions.csv'
-shpath='/home/gerardo/Scrivania/csvFillerScripts/'
+shpath='/home/gerardo/Scrivania/csvFillerScripts/AllVersionsScripts/'
 repopath='/home/gerardo/VersioniMath/Math'
 project_url='https://github.com/apache/commons-math'
 project_id='Math'

@@ -6,11 +6,11 @@ import numpy as np
 from datetime import datetime, timezone
 import FillerScripts
 # defects4j query -H -p Jsoup -q "bug.id,revision.id.buggy,revision.id.fixed,report.id,report.url,revision.date.buggy,revision.date.fixed" -o aaaaaaaaaaaaa.csv
-finalcsvpath='/home/gerardo/Scrivania/revisions/JacksonXmlRevisions.csv'
-shpath='/home/gerardo/Scrivania/csvFillerScripts/'
-repopath='/home/gerardo/VersioniJacksonXml/JacksonXml'
-project_url='https://github.com/FasterXML/jackson-dataformat-xml'
-project_id='JacksonXml'
+finalcsvpath='/home/gerardo/Scrivania/revisions/TimeRevisions.csv'
+shpath='/home/gerardo/Scrivania/csvFillerScripts/AllVersionsScripts/'
+repopath='/home/gerardo/VersioniTime/Time'
+project_url='https://github.com/JodaOrg/joda-time'
+project_id='Time'
 
 
 FillerScripts.cloneProject(finalcsvpath,shpath,repopath,project_url,project_id)

@@ -6,11 +6,13 @@ import numpy as np
 from datetime import datetime, timezone
 import FillerScripts
 # defects4j query -H -p Jsoup -q "bug.id,revision.id.buggy,revision.id.fixed,report.id,report.url,revision.date.buggy,revision.date.fixed" -o aaaaaaaaaaaaa.csv
-finalcsvpath='/home/gerardo/Scrivania/revisions/CodecRevisions.csv'
-shpath='/home/gerardo/Scrivania/csvFillerScripts/'
-repopath='/home/gerardo/VersioniCodec/Codec'
-project_url='https://github.com/apache/commons-codec'
-project_id='Codec'
+finalcsvpath='/home/gerardo/Scrivania/revisions/CliRevisions.csv'
+shpath='/home/gerardo/Scrivania/csvFillerScripts/AllVersionsScripts/'
+repopath='/home/gerardo/VersioniCli/Cli'
+project_url='https://github.com/apache/commons-cli'
+project_id='Cli'
+
+
 
 
 FillerScripts.cloneProject(finalcsvpath,shpath,repopath,project_url,project_id)
