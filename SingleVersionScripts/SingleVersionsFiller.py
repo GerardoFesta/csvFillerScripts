@@ -70,7 +70,7 @@ def getInfo(revisionpath,finalcsvpath,shpath,repopath,project_url,project_id):
             data2=pd.to_datetime(finaldf.at[finalidx-1, 'Data fine'][:-5])
             finaldf.at[finalidx-1,'Tempo versione']=abs((data1-data2).days)
             finaldf.at[finalidx-1,'Numero commit']=contacommit
-            finaldf.at[finalidx-1,'Tempo medio tra commit']=totTempoCommit/contacommit
+            finaldf.at[finalidx-1,'Tempo medio tra commit']=finaldf.at[finalidx-1,'Tempo versione']/finaldf.at[finalidx-1,'Numero commit']
             totTempoCommit=0
             contacommit=1
 
@@ -83,12 +83,17 @@ def getInfo(revisionpath,finalcsvpath,shpath,repopath,project_url,project_id):
                 totTempoCommit+=abs((data1-data2).days)
 
         if((idx==1) and ((df.at[idx,'versione']==df.at[idx+1,'versione'])or (df.at[idx,'versione']+' - PRIMO'==df.at[idx+1,'versione']))):
-
-            finaldf.at[finalidx,'Ultimo commit']=df.at[idx+1,'commit']
-            finaldf.at[finalidx, 'Data fine']=df.at[idx+1,'data']
-            data1=pd.to_datetime(finaldf.at[idx+1, 'Data inizio'][:-5])
-            data2=pd.to_datetime(finaldf.at[idx+1, 'Data fine'][:-5])
+            contacommit+=1
+            data1=pd.to_datetime(df.at[idx, 'data'][:-5])
+            data2=pd.to_datetime(df.at[idx+1, 'data'][:-5])
+            totTempoCommit+=abs((data1-data2).days)
+            finaldf.at[finalidx,'Ultimo commit']=df.at[idx,'commit']
+            finaldf.at[finalidx, 'Data fine']=df.at[idx,'data']
+            data1=pd.to_datetime(finaldf.at[finalidx, 'Data inizio'][:-5])
+            data2=pd.to_datetime(finaldf.at[finalidx, 'Data fine'][:-5])
             finaldf.at[finalidx,'Tempo versione']=abs((data1-data2).days)
+            finaldf.at[finalidx,'Numero commit']=contacommit
+            finaldf.at[finalidx,'Tempo medio tra commit']=finaldf.at[finalidx,'Tempo versione']/finaldf.at[finalidx,'Numero commit']
 
     finaldf.to_csv(finalcsvpath, index=False)
 
