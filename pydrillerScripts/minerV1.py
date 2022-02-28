@@ -4,7 +4,7 @@ from pydriller.metrics.process.code_churn import CodeChurn
 from pydriller.metrics.process.hunks_count import HunksCount
 
 
-
+#con commit
 class Miner:
     def mineVersion(repopath, startCommit, endCommit):
         i=0
@@ -24,7 +24,7 @@ class Miner:
         else:
             repo=Repository(path_to_repo=repopath, from_commit=startCommit, to_commit=endCommit).traverse_commits()
         for commit in repo:
-            print(commit.hash)
+
             i+=1
             newLines+=commit.insertions
             delLines+=commit.deletions
@@ -65,6 +65,7 @@ class Miner:
             "max_files_in_commit": maxFilesInCommit,
             "avg_files_in_commit": averageFilesInCommit,
             "tot_hunks": totHunks,
-            "tot_files_hunks": totFile
+            "tot_files_hunks": totFile,
+            "tot_commit": i
         }
         return returnVals

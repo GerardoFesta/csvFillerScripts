@@ -4,16 +4,17 @@ import os
 import subprocess
 import numpy as np
 from datetime import datetime, timezone
-from miner import Miner
-
+from minerV3 import Miner
+from minerV1 import Miner as MinerSingolo
 class Feeder:
 
-    def __init__(self,repo,csv,finalcsv):
+    def __init__(self,repo,csv,commitscsv, finalcsv):
         self.repo=repo
         self.csv=csv
         self.df = pd.read_csv(csv)
+        self.commitdf=pd.read_csv(commitscsv)
         self.finalcsv=finalcsv
-        lista={'Versione':[],'Numero bug':[],'Numero fix':[],'Numero commit':[],'Tempo medio tra commit':[],'Tempo versione':[], 'Data inizio':[], 'Data fine':[], 'Linee aggiunte':[], 'Linee rimosse':[],'Numero Commit con DMM':[], 'Media DMM Unit Size':[], 'Media DMM Unit Complexity':[], 'Media DMM Unit Interfacing':[], 'Numero max file in commit':[], 'Numero media file in commit':[], 'Numero totale hunks':[], 'Numero file analizzati per hunks':[]}
+        lista={'Versione':[],'Numero bug':[],'Numero fix':[],'Numero commit':[],'Tempo medio tra commit':[],'Tempo versione':[], 'Data inizio':[], 'Data fine':[], 'Linee aggiunte':[], 'Linee rimosse':[],'Numero Commit con DMM':[], 'Media DMM Unit Size':[], 'Media DMM Unit Complexity':[], 'Media DMM Unit Interfacing':[], 'Numero max file in commit':[], 'Numero media file in commit':[], 'Numero totale hunks':[], 'Numero file analizzati per hunks':[], 'Ncommit2':[]}
         self.finaldf=pd.DataFrame(lista)
         self.finaldf['Data inizio']=self.finaldf['Data inizio'].astype(str)
         self.finaldf['Data fine']=self.finaldf['Data fine'].astype(str)
@@ -21,6 +22,7 @@ class Feeder:
 
     def feed(self):
         print(self.finalcsv)
+        commitidx=len(self.commitdf.index)-1
         for idx in self.df.index:
             self.finaldf.at[idx, "Versione"]=self.df.at[idx,"Versione"]
             self.finaldf.at[idx, "Numero bug"]=self.df.at[idx,"Numero bug"]
@@ -30,7 +32,27 @@ class Feeder:
             self.finaldf.at[idx, "Tempo versione"]=self.df.at[idx,"Tempo versione"]
             self.finaldf.at[idx, "Data inizio"]=self.df.at[idx,"Data inizio"]
             self.finaldf.at[idx, "Data fine"]=self.df.at[idx,"Data fine"]
-            risultati_versione=Miner.mineVersion(self.repo, self.df.at[idx,"Primo commit"], self.df.at[idx,"Ultimo commit"])
+            print(self.df.at[idx,"Versione"])
+
+            primocommit=self.df.at[idx, "Primo commit"]
+            ultimocommit=self.df.at[idx, "Ultimo commit"]
+            commit=primocommit
+            lista=[]
+
+            print(commitidx)
+            print("PRIMO",self.commitdf.at[commitidx,"commit"])
+            while(not commit==ultimocommit):
+                commit=self.commitdf.at[commitidx,"commit"]
+                lista.append(commit)
+                commitidx=commitidx-1
+
+            if(len(lista)==0):
+                lista.append(primocommit)
+                commitidx=commitidx-1
+
+            print(commitidx)
+            print("ULTIMO",commit)
+            risultati_versione=Miner.mineVersion(self.repo, lista)
 
             self.finaldf.at[idx,"Linee aggiunte"]=risultati_versione.get("linee_aggiunte")
             self.finaldf.at[idx,"Linee rimosse"]=risultati_versione.get("linee_rimosse")
@@ -42,6 +64,7 @@ class Feeder:
             self.finaldf.at[idx,"Numero media file in commit"]=risultati_versione.get("avg_files_in_commit")
             self.finaldf.at[idx,"Numero totale hunks"]=risultati_versione.get("tot_hunks")
             self.finaldf.at[idx,"Numero file analizzati per hunks"]=risultati_versione.get("tot_files_hunks")
+            self.finaldf.at[idx,"Ncommit2"]=risultati_versione.get("tot_commit")
         print("salvo")
         self.finaldf.to_csv(self.finalcsv, index=False)
         print("salvato")

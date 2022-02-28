@@ -1,6 +1,6 @@
-from feederV2 import Feeder
+from feederV3 import Feeder
 
-cli=Feeder("/home/gerardo/VersioniCli/Cli","/home/gerardo/Scrivania/AnalisiVersioni/CliVersions.csv", "/home/gerardo/Scrivania/Versioni_e_pydriller/Cli_drilled.csv")
+cli=Feeder("/home/gerardo/VersioniCli/Cli","/home/gerardo/Scrivania/AnalisiVersioni/CliVersions.csv", "/home/gerardo/VersioniCli/Cli/commitsInfo.csv", "/home/gerardo/Scrivania/Versioni_e_pydriller/Cli_drilled.csv")
 cli.feed()
 '''
     closure=Feeder("/home/gerardo/VersioniClosure/Closure","/home/gerardo/Scrivania/AnalisiVersioni/ClosureVersions.csv", "/home/gerardo/Scrivania/Versioni_e_pydriller/Closure_drilled.csv")
