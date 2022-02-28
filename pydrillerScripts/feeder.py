@@ -20,6 +20,7 @@ class Feeder:
         self.finaldf['Versione']=self.finaldf['Versione'].astype(str)
 
     def feed(self):
+        print(self.finalcsv)
         for idx in self.df.index:
             self.finaldf.at[idx, "Versione"]=self.df.at[idx,"Versione"]
             self.finaldf.at[idx, "Numero bug"]=self.df.at[idx,"Numero bug"]
@@ -41,5 +42,6 @@ class Feeder:
             self.finaldf.at[idx,"Numero media file in commit"]=risultati_versione.get("avg_files_in_commit")
             self.finaldf.at[idx,"Numero totale hunks"]=risultati_versione.get("tot_hunks")
             self.finaldf.at[idx,"Numero file analizzati per hunks"]=risultati_versione.get("tot_files_hunks")
-
+        print("salvo")
         self.finaldf.to_csv(self.finalcsv, index=False)
+        print("salvato")

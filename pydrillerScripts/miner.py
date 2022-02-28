@@ -24,7 +24,7 @@ class Miner:
         else:
             repo=Repository(path_to_repo=repopath, from_commit=startCommit, to_commit=endCommit).traverse_commits()
         for commit in repo:
-
+            print(commit.hash)
             i+=1
             newLines+=commit.insertions
             delLines+=commit.deletions
@@ -68,8 +68,3 @@ class Miner:
             "tot_files_hunks": totFile
         }
         return returnVals
-
-repopath="/home/gerardo/VersioniCli/Cli"
-startCommit="fc40901cfbf8c502e313c39bed31a12c6b0f14e6"
-endCommit="b3a942dbbba2d0c06135026279e79160cc122e5e"
-vals=Miner.mineVersion(repopath, startCommit, endCommit)

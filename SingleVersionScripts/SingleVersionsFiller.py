@@ -95,6 +95,16 @@ def getInfo(revisionpath,finalcsvpath,shpath,repopath,project_url,project_id):
             finaldf.at[finalidx,'Numero commit']=contacommit
             finaldf.at[finalidx,'Tempo medio tra commit']=finaldf.at[finalidx,'Tempo versione']/finaldf.at[finalidx,'Numero commit']
 
+        if((idx==1) and ((not df.at[idx,'versione']==df.at[idx+1,'versione'])and (not df.at[idx,'versione']+' - PRIMO'==df.at[idx+1,'versione']))):
+            print("entrato nel nuovo")
+            finaldf.at[finalidx,'Ultimo commit']=df.at[idx+1,'commit']
+            finaldf.at[finalidx, 'Data fine']=df.at[idx+1,'data']
+            data1=pd.to_datetime(finaldf.at[finalidx, 'Data inizio'][:-5])
+            data2=pd.to_datetime(finaldf.at[finalidx, 'Data fine'][:-5])
+            finaldf.at[finalidx,'Tempo versione']=abs((data1-data2).days)
+            finaldf.at[finalidx,'Numero commit']=contacommit
+            finaldf.at[finalidx,'Tempo medio tra commit']=finaldf.at[finalidx,'Tempo versione']/finaldf.at[finalidx,'Numero commit']
+
     finaldf.to_csv(finalcsvpath, index=False)
 
     getBugsFixesNumber(revisionpath,finalcsvpath,shpath,repopath,project_url,project_id)
