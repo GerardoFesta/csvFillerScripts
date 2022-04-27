@@ -70,7 +70,10 @@ class Miner:
         }
         print(i)
         return returnVals
+'''
+d1=datetime.datetime.strptime("2009-03-16 07:26:44 +0000", "%Y-%m-%d %H:%M:%S %z")
+d2=datetime.datetime.strptime("2009-03-16 07:29:19 +0000", "%Y-%m-%d %H:%M:%S %z")
+dict=Miner.mineVersion("/home/gerardo/VersioniCli/Cli", d1,d2)
 
-d1=datetime.datetime.strptime("2015-04-23 18:41:00 -0700", "%Y-%m-%d %H:%M:%S %z")
-d2=datetime.datetime.strptime("2015-04-24 10:23:23 -0700", "%Y-%m-%d %H:%M:%S %z")
-Miner.mineVersion("/home/gerardo/VersioniJacksonDatabind/JacksonDatabind", d1,d2)
+print(dict["tot_commit"])
+'''

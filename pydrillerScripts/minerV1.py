@@ -19,12 +19,19 @@ class Miner:
         avg_dmm_unit_size=-1
         avg_dmm_unit_complexity=-1
         avg_dmm_unit_interfacing=-1
+
+        #PARTE DI TEST
+        lista=[]
+        #FINE PARTE DI TEST
+
         if(startCommit==endCommit):
             repo=Repository(path_to_repo=repopath, single=startCommit).traverse_commits()
         else:
             repo=Repository(path_to_repo=repopath, from_commit=startCommit, to_commit=endCommit).traverse_commits()
         for commit in repo:
-
+            #PARTE DI TEST
+            lista.append(commit.hash)
+            #FINE PARTE DI TEST
             i+=1
             newLines+=commit.insertions
             delLines+=commit.deletions
@@ -54,7 +61,7 @@ class Miner:
             totHunks+=hunks.get(a)
         totFile=len(hunks)
 
-
+        print(type(lista))
         returnVals={
             "linee_aggiunte": newLines,
             "linee_rimosse": delLines,
@@ -66,6 +73,14 @@ class Miner:
             "avg_files_in_commit": averageFilesInCommit,
             "tot_hunks": totHunks,
             "tot_files_hunks": totFile,
+            #PARTE DI TEST
+            "lista": lista,
+            #FINE PARTE DI TEST
             "tot_commit": i
         }
         return returnVals
+
+'''
+dict=Miner.mineVersion("/home/gerardo/VersioniCli/Cli", "aa2434d301c49d100f50af544333886a6767ce9d", "f0fba7bff7de067e12a78169d1371f3773f3f5a7")
+print(dict["lista"])
+'''

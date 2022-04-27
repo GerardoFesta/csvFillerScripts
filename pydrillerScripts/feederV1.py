@@ -20,6 +20,13 @@ class Feeder:
         self.finaldf['Versione']=self.finaldf['Versione'].astype(str)
 
     def feed(self):
+        #PARTE DI TEST
+        lista={'Commit':[], 'Versione':[], 'Ncommit':[]}
+        testdf=pd.DataFrame(lista)
+        testdf['Commit']=testdf['Commit'].astype(str)
+        testdf['Versione']=testdf['Versione'].astype(str)
+        testidx=1
+        #FINE PARTE DI TEST
         print(self.finalcsv)
         for idx in self.df.index:
             self.finaldf.at[idx, "Versione"]=self.df.at[idx,"Versione"]
@@ -31,7 +38,18 @@ class Feeder:
             self.finaldf.at[idx, "Data inizio"]=self.df.at[idx,"Data inizio"]
             self.finaldf.at[idx, "Data fine"]=self.df.at[idx,"Data fine"]
             print(self.df.at[idx,"Versione"])
+
             risultati_versione=Miner.mineVersion(self.repo, self.df.at[idx,"Primo commit"], self.df.at[idx,"Ultimo commit"])
+
+            #PARTE DI TEST
+            tutticommit=risultati_versione.get("lista")
+            print(type(tutticommit))
+            for j in tutticommit:
+                testdf.loc[len(testdf.index)]=[j,self.finaldf.at[idx,'Versione'],""]
+            testdf.at[len(testdf.index)-1,'Versione']=self.finaldf.at[idx,'Versione']
+            testdf.at[len(testdf.index)-1,'Ncommit']=risultati_versione.get("tot_commit")
+
+            #FINE PARTE DI TEST
 
             self.finaldf.at[idx,"Linee aggiunte"]=risultati_versione.get("linee_aggiunte")
             self.finaldf.at[idx,"Linee rimosse"]=risultati_versione.get("linee_rimosse")
@@ -47,3 +65,7 @@ class Feeder:
         print("salvo")
         self.finaldf.to_csv(self.finalcsv, index=False)
         print("salvato")
+        #PARTE DI TEST
+        print("salvo test")
+        testdf.to_csv("/home/gerardo/Scrivania/ListaCommitDaEsec.csv", index=False)
+        #FINE PARTE DI TEST
